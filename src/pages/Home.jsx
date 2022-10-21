@@ -42,6 +42,7 @@ export default function Home() {
 
   const handleChangeTodo = (e) => {
     setTodo(e.target.value);
+    console.log(todo)
   }
 
   const addTodo = () => {
@@ -55,6 +56,12 @@ export default function Home() {
     });
 
     setTodo("")
+  }
+
+  const handleKeyDownAddTodo = (e) => {
+    if (e.key === "Enter") {
+      addTodo(e);
+    }
   }
 
   const updateClickTodo = (todo) => {
@@ -84,27 +91,36 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <div>Home</div>
-      <div>
-        <label htmlFor="todo"></label>
-        <input type="text" value={todo} onChange={handleChangeTodo}/>
-        {listTodo.map((todo) => (
-          <div>
-            <h3>{todo.todo}</h3>
-            <BsTrash onClick={() => deleteTodo(todo.id)}/>
-            <BsPencilSquare onClick={() => updateClickTodo(todo)}/>
+    <div class='min-h-screen w-screen flex items-center justify-center p-16 bg-gradient-to-tr from-darkGray to-secondary'>
+      <div class='w-[85%] h-[90%] flex flex-col items-center'>
+        <h1 class='text-3xl font-semibold text-center text-white mb-2'>Let’s organizing your activities!</h1>
+        <div class='flex w-full m-10'>
+          <Input class='w-4/5' type="text" placeholder="Add todo" field={todo} action={handleChangeTodo} actionEnter={handleKeyDownAddTodo}/>
+          
+          <div class='w-1/5 flex items-center'>
+          {isUpdate ? 
+            <Button class='mb-2 px-3' action={updateTodo}>Update</Button> :
+            <Button class='mb-2 px-3' action={addTodo}>Add</Button>
+          }
+        </div>
+        </div>
+        <div class='h-[50%] py-2 pr-4 my-2 w-full scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100'>
+          <div class='w-full h-72 pr-2'>
+            {listTodo.map((todo) => (
+                <div class='h-14 px-3 bg-whiteBone ml-2 mt-4 mb-6 flex justify-between items-center border-2 border-lightGray-300 rounded-lg'>
+                  <input class='w-5 h-5 bg-lightGray border-2 accent-primary rounded-full' type="checkbox" />
+                  <h3 class='w-[100%] px-4'>{todo.todo}</h3>
+                  <BsTrash class='text-xl text-[#1C424E] mx-2' onClick={() => deleteTodo(todo.id)}/>
+                  <BsPencilSquare class='text-xl text-[#BD0000] mx-2' onClick={() => updateClickTodo(todo)}/>
+                </div>
+              ))}
+              
           </div>
-        ))}
+        </div>
+        <div class='m-10 w-1/5 flex items-center'>
+          <button class='w-full justify-center h-11 flex items-center rounded-lg bg-darkGray text-white text-base hover:bg-semiGray' onClick={handleLogout}>Logout</button>  
+        </div>
       </div>
-      {isUpdate ? 
-      <button onClick={updateTodo}>Update</button> :
-      <button onClick={addTodo}>Add</button>
-      }
-      
-      <br />
-      
-    <button onClick={handleLogout}>Logout</button>  
     </div>
   )
 }   
