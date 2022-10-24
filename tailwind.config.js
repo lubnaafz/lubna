@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
-module.exports = {
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
   content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     extend: {
@@ -16,4 +18,4 @@ module.exports = {
     },
   },
   plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar")],
-}
+})

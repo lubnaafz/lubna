@@ -9,12 +9,16 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import { BsPencilSquare } from 'react-icons/bs';
 import { BsTrash } from 'react-icons/bs';
+import { TiTick } from 'react-icons/ti';
 
 export default function Home() {
   const [todo, setTodo] = useState();
   const [idTodo, setIdTodo] = useState();
   const [listTodo, setListTodo] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isEaseIn, setIsEaseIn] = useState(false);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +44,18 @@ export default function Home() {
       })
   })
 
+  const easeIn = (cn) => {
+    setIsEaseIn(true);
+    cn()
+  }
+
+  const unSuccess = () => {
+    setTimeout(() => {
+      setMessage("");
+      setIsSuccess(false);
+    }, 1000);
+  }
+
   const handleChangeTodo = (e) => {
     setTodo(e.target.value);
     console.log(todo)
@@ -52,10 +68,14 @@ export default function Home() {
     set(ref(db, `/${auth.currentUser.uid}/${id}`), {
       id: id,
       todo: todo,
-      time: time
+      time: time,
+      done: false,
+      isEaseIn: false,
     });
 
     setTodo("")
+    setIsSuccess(true)
+    setMessage("Task added successfully")
   }
 
   const handleKeyDownAddTodo = (e) => {
@@ -75,13 +95,34 @@ export default function Home() {
     update(ref(db, `/${auth.currentUser.uid}/${idTodo}`), {
       idTodo: idTodo,
       todo: todo,
-      time: time
+      time: time,
+      done: false
     });
     setTodo("")
+    setIsUpdate(false)
+    setIsSuccess(true)
+    setMessage("Task updated successfully")
   }
 
   const deleteTodo = (id) => {
     remove(ref(db, `/${auth.currentUser.uid}/${id}`));
+    setIsSuccess(true)
+    setMessage("Task removed successfully")
+  }
+
+  const doneTodo = (todo) => {
+    if(todo.done) {
+      update(ref(db, `/${auth.currentUser.uid}/${todo.id}`), {
+        done: false,
+      });
+    }
+    else if(!todo.done) {
+      update(ref(db, `/${auth.currentUser.uid}/${todo.id}`), {
+        done: true,
+      });
+    }
+    setIsEaseIn(false);
+    
   }
 
   const handleLogout = () => {
@@ -94,24 +135,28 @@ export default function Home() {
     <div class='min-h-screen w-screen flex items-center justify-center p-16 bg-gradient-to-tr from-darkGray to-secondary'>
       <div class='w-[85%] h-[90%] flex flex-col items-center'>
         <h1 class='text-3xl font-semibold text-center text-white mb-2'>Let’s organizing your activities!</h1>
-        <div class='flex w-full m-10'>
-          <Input class='w-4/5' type="text" placeholder="Add todo" field={todo} action={handleChangeTodo} actionEnter={handleKeyDownAddTodo}/>
-          
-          <div class='w-1/5 flex items-center'>
+        <div class='flex w-full m-10 ml-14'>
+          <Input class='ml-2 w-[75%]' type="text" placeholder={isUpdate ? 'Update Task' : 'Add Task'} field={todo} action={handleChangeTodo} actionEnter={handleKeyDownAddTodo}/>
+
+          <div class=' w-[15%] flex items-center mr-8'>
           {isUpdate ? 
             <Button class='mb-2 px-3' action={updateTodo}>Update</Button> :
             <Button class='mb-2 px-3' action={addTodo}>Add</Button>
           }
-        </div>
+          </div>
         </div>
         <div class='h-[50%] py-2 pr-4 my-2 w-full scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100'>
           <div class='w-full h-72 pr-2'>
-            {listTodo.map((todo) => (
-                <div class='h-14 px-3 bg-whiteBone ml-2 mt-4 mb-6 flex justify-between items-center border-2 border-lightGray-300 rounded-lg'>
-                  <input class='w-5 h-5 bg-lightGray border-2 accent-primary rounded-full' type="checkbox" />
-                  <h3 class='w-[100%] px-4'>{todo.todo}</h3>
-                  <BsTrash class='text-xl text-[#1C424E] mx-2' onClick={() => deleteTodo(todo.id)}/>
-                  <BsPencilSquare class='text-xl text-[#BD0000] mx-2' onClick={() => updateClickTodo(todo)}/>
+            {listTodo.sort((a, b) => a.done - b.done || new Date(b.time) - new Date(a.time)).map((todo) => (
+                <div className={`h-14 px-3 ml-2 mt-4 mb-6 flex justify-between items-center border-2 border-lightGray-300 rounded-lg 
+                ${todo.done? 'bg-semiGray bg-opacity-30' : 
+                'bg-whiteBone'}
+                ${isEaseIn ? 'ease-in duration-700' : 'ease-out duration-700'}`}>
+                  <input class='w-5 h-5 bg-primary border-2 accent-primary rounded-full cursor-pointer' type='checkbox' checked={todo.done} 
+                  onClick={() => easeIn(() => doneTodo(todo))}/>
+                  <h3 className={todo.done ? 'w-[100%] px-4 cursor-pointer line-through': 'w-[100%] px-4 cursor-pointer'} onClick={() => easeIn(() => doneTodo(todo))}>{todo.todo}</h3>
+                  <BsTrash class='text-xl text-[#1C424E] mx-2 cursor-pointer' onClick={() => easeIn(() => deleteTodo(todo.id))}/>
+                  <BsPencilSquare class='text-xl text-[#BD0000] mx-2 cursor-pointer' onClick={() => updateClickTodo(todo)}/>
                 </div>
               ))}
               
@@ -120,6 +165,14 @@ export default function Home() {
         <div class='m-10 w-1/5 flex items-center'>
           <button class='w-full justify-center h-11 flex items-center rounded-lg bg-darkGray text-white text-base hover:bg-semiGray' onClick={handleLogout}>Logout</button>  
         </div>
+        {/* alert success  */}
+        {isSuccess ?  
+        <div class='absolute bottom-10 right-10 w-auto bg-white bg-opacity-50 h-10 flex items-center justify-center rounded-2xl p-2'>
+          <TiTick class='text-2xl text-primary rounded-full border-2 border-primary m-2 mr-1'/>
+          <p class='m-2 ml-1'>{message}</p>
+        {unSuccess()}
+        </div> 
+        : <></>}
       </div>
     </div>
   )
