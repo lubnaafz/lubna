@@ -95,10 +95,11 @@ export default function Home() {
   const updateTodo = () => {
     const time = new Date().toLocaleString()
     update(ref(db, `/${auth.currentUser.uid}/${idTodo}`), {
-      idTodo: idTodo,
+      id: idTodo,
       todo: todo,
       time: time,
-      done: false
+      done: false,
+      isEaseIn: false,
     });
     setTodo("")
     setIsUpdate(false)
