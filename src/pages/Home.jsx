@@ -135,7 +135,7 @@ export default function Home() {
 
   return (
     <div class='min-h-screen w-screen flex items-center justify-center py-14 px-10 md:p-16 bg-gradient-to-tr from-darkGray to-secondary'>
-      <div class='w-[100%] h-[90%] flex flex-col items-center'>
+      <div class='w-[100%] md:w-[85%] h-[90%] flex flex-col items-center'>
         <h1 class='md:text-3xl text-2xl font-semibold text-center text-white mb-2'>Let’s organizing your activities!</h1>
         <div class='flex w-full m-10 ml-14'>
           <Input class='ml-2 w-[75%]' type="text" placeholder={isUpdate ? 'Update Task' : 'Add Task'} field={todo} action={handleChangeTodo} actionEnter={handleKeyDownAddTodo}/>
