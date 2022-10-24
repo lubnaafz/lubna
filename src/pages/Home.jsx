@@ -148,8 +148,8 @@ export default function Home() {
           </div>
           <div class='sm:w-[15%] md:hidden w-auto flex mr-8'>
             {isUpdate ? 
-              <MdDone class='text-primary mt-2 bg-white rounded-lg flex items-center justify-center text-4xl p-1.5  '/> :
-              <BsPlusSquareFill class='mb-2 px-3 text-white text-6xl pb-3 pt-1'/>            
+              <MdDone class='text-primary mt-2 bg-white rounded-lg flex items-center justify-center text-4xl p-1.5' onClick={updateTodo}/> :
+              <BsPlusSquareFill class='mb-2 px-3 text-white text-6xl pb-3 pt-1' onClick={addTodo}/>            
             }
           </div>
         </div>
