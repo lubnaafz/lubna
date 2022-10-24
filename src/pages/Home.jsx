@@ -135,8 +135,8 @@ export default function Home() {
   }
 
   return (
-    <div class='min-h-screen w-screen flex items-center justify-center py-14 px-10 md:p-16 bg-gradient-to-tr from-darkGray to-secondary'>
-      <div class='w-[100%] md:w-[85%] h-[90%] flex flex-col items-center'>
+    <div class='h-screen w-screen flex items-center justify-center py-14 px-10 md:p-16 bg-gradient-to-tr from-darkGray to-secondary'>
+      <div class='w-[100%] md:w-[85%] 2xl:h-[94%] h-full flex flex-col items-center'>
         <h1 class='md:text-3xl text-2xl font-semibold text-center text-white mb-2'>Let’s organizing your activities!</h1>
         <div class='flex w-full m-10 ml-14'>
           <Input class='ml-2 w-[75%]' type="text" placeholder={isUpdate ? 'Update Task' : 'Add Task'} field={todo} action={handleChangeTodo} actionEnter={handleKeyDownAddTodo}/>
@@ -157,7 +157,7 @@ export default function Home() {
         <div class='h-[50%] py-2 pr-4 my-2 w-full scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100'>
           <div class='w-full h-72 pr-2'>
             {listTodo.sort((a, b) => a.done - b.done || new Date(b.time) - new Date(a.time)).map((todo) => (
-                <div className={`lg:h-14 h-9 px-3 ml-2 mt-4 mb-6 flex justify-between items-center border-2 border-lightGray-300 rounded-lg 
+                <div className={`2xl:h-14 h-9 px-3 ml-2 mt-4 mb-6 flex justify-between items-center border-2 border-lightGray-300 rounded-lg 
                 ${todo.done? 'bg-semiGray bg-opacity-30' : 
                 'bg-whiteBone'}
                 ${isEaseIn ? 'ease-in duration-700' : 'ease-out duration-700'}`}>
@@ -171,14 +171,14 @@ export default function Home() {
               
           </div>
         </div>
-        <div class='m-10 md:w-1/5 w-auto flex items-center'>
-          <button class='w-full justify-center h-11 p-4 flex items-center rounded-lg bg-darkGray text-white text-base hover:bg-semiGray' onClick={handleLogout}>Logout</button>  
+        <div class='mt-10 xl:mt-16 md:w-1/5 w-auto flex items-center'>
+          <button class='w-full justify-center h-11 p-4 flex items-center rounded-lg bg-darkGray text-white sm:text-base text-xs hover:bg-semiGray' onClick={handleLogout}>Logout</button>  
         </div>
         {/* alert success  */}
         {isSuccess ?  
-        <div class='absolute bottom-10 right-10 w-auto bg-white bg-opacity-50 h-10 flex items-center justify-center rounded-2xl p-2'>
+        <div class='absolute bottom-10 md:right-10 w-auto bg-white bg-opacity-50 h-10 flex items-center justify-center rounded-2xl p-2'>
           <TiTick class='text-2xl text-primary rounded-full border-2 border-primary m-2 mr-1'/>
-          <p class='m-2 ml-1'>{message}</p>
+          <p class='m-2 ml-1 text-xs lg:text-base'>{message}</p>
         {unSuccess()}
         </div> 
         : <></>}
