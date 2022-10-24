@@ -164,8 +164,8 @@ export default function Home() {
                   <input class='w-5 h-5 bg-primary border-2 accent-primary rounded-full cursor-pointer' type='checkbox' checked={todo.done} 
                   onClick={() => easeIn(() => doneTodo(todo))}/>
                   <h3 className={`w-[100%] px-4 cursor-pointer lg:text-base text-xs ${todo.done ? 'line-through': ''}`} onClick={() => easeIn(() => doneTodo(todo))}>{todo.todo}</h3>
-                  <BsTrash class='md:text-xl text-3xl text-[#1C424E] mx-2 cursor-pointer' onClick={() => easeIn(() => deleteTodo(todo.id))}/>
-                  <BsPencilSquare class='md:text-xl text-3xl text-[#BD0000] mx-2 cursor-pointer' onClick={() => updateClickTodo(todo)}/>
+                  <BsTrash class='md:text-xl text-3xl text-[#BD0000] mx-2 cursor-pointer' onClick={() => easeIn(() => deleteTodo(todo.id))}/>
+                  <BsPencilSquare class='md:text-xl text-3xl text-[#1C424E] mx-2 cursor-pointer' onClick={() => updateClickTodo(todo)}/>
                 </div>
               ))}
               
