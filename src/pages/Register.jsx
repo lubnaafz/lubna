@@ -85,10 +85,10 @@ export default function Register() {
       }
 
     return (
-        <div class='h-screen w-screen flex items-center justify-center p-20 bg-gradient-to-tr from-primary to-secondary'>
-            <div class='w-5/6 h-[90%] flex'>
+        <div class='h-screen w-screen flex items-center justify-center p-10 bg-gradient-to-tr from-primary to-secondary sm:p-20 xl'>
+            <div class='h-[85%] md:h-full lg:w-5/6 w-full flex'>
                 {/* container left side or login */}
-                <div class='w-1/2 bg-white rounded-bl-xl rounded-tl-xl flex items-center justify-center'>
+                <div class='bg-white rounded-bl-xl rounded-tl-xl flex items-center justify-center md:w-[50%] sm:w-[95%] w-full'>
                     <div class='flex flex-col items-center'>
                         <h1 class='text-2xl font-semibold mb-2'>Create Account</h1>
                         <div class='m-6 mb-2 w-[90%]'>
@@ -110,18 +110,18 @@ export default function Register() {
                             <Button children="Create Account" action={handleRegister}></Button>
                         </div>
                         <div class='flex mt-6'>
-                            <p class='pr-1'>Already have an account?
+                            <p class='pr-1 md:text-sm text-sm'>Already have an account?
                             </p>
-                            <a class='text-secondary font-medium hover:text-primary' href="/">Login</a>
+                            <a class='text-secondary font-medium hover:text-primary md:text-sm text-sm' href="/">Login</a>
                         </div>
                     </div>
                 </div>
                 {/* container right side */}
-                <div class='w-1/2 bg-primary flex items-center justify-center rounded-br-xl rounded-tr-xl'>
-                <div class='flex flex-col items-center p-8 gap-4'>
-                    <h1 class='text-white text-4xl font-semibold'>Join Us</h1>
-                    <BsCardChecklist class='text-white text-7xl'/>
-                    <h3 class='text-center text-white text-lg'>Join us to start origanizing your activites </h3>
+                <div class='w-1/2 bg-primary flex items-center justify-center rounded-br-xl rounded-tr-xl w-[2.5%] xl:w-1/2 md:w-[50%]'>
+                <div class='flex-col items-center p-8 gap-4 md:flex hidden'>
+                    <h1 class='text-white font-semibold text-center xl:text-4xl lg:text-3xl md:text-2xl'>Join Us</h1>
+                    <BsCardChecklist class='text-white ext-7xl xl:text-7xl lg:text-4xl md:text-3xl'/>
+                    <h3 class='text-center text-white text-lg xl:text-lg md:text-base'>Join us to start origanizing your activites </h3>
                 </div>
                 </div>
                 

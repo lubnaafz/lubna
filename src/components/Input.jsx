@@ -6,7 +6,8 @@ import { BsShieldLock } from 'react-icons/bs'
 const Input = (props) => {
     const { icon, action, actionEnter, type, placeholder, field } = props;
   return (
-    <div class='m-2 ml-0 w-full px-3 h-11 bg-white flex items-center border-2 border-lightGray-300 rounded-lg focus-within:border-teal-700 focus:bg-whiteBone'>
+    <div class='m-2 ml-0 w-full px-3 bg-white flex items-center border-2 border-lightGray-300 
+    rounded-lg focus-within:border-teal-700 focus:bg-whiteBone lg:h-11 h-9'>
       {icon === 'email' ? 
       <MdOutlineMail class='text-2xl text-darkGray ml-0 m-2'/> : 
       [icon === 'password' ?
@@ -16,7 +17,7 @@ const Input = (props) => {
     ]
       }
       
-      <input class='bg-transparent w-full border-none focus:ring-0 focus:bg-transparent'
+      <input class='bg-transparent w-full border-none focus:ring-0 focus:bg-transparent lg:text-base text-sm'
         type={type}
         placeholder={placeholder}
         onChange={action}
